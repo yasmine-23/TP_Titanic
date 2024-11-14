@@ -1,0 +1,81 @@
+---
+title: "Analyse des données TitanicSurvival"
+author: "Yasmine"
+output: html_document
+---
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Partie 02 :
+Charger le package contenant les données
+```{r}
+library(carData)
+data("TitanicSurvival")
+```
+
+Présentez les données vous pouvez chercher TitanicSurvvival:
+Le dataset contient 1 309 observations et 4 variables :
+
+- survived : Indique si le passager a survécu (`yes`) ou non (`no`).
+- sex : Sexe du passager (`female` ou `male`).
+- age : Âge en années (avec quelques valeurs fractionnaires pour les enfants) ; 263 valeurs manquantes.
+- passengerClass : Classe du passager (`1st`, `2nd` ou `3rd`). 
+
+Ces variables permettent d'explorer les facteurs potentiellement associés à la survie.
+
+```{r}
+
+head(TitanicSurvival)
+summary(TitanicSurvival)
+```
+
+Créer un graphique de la répartition des survivants en fonction du sexe 
+```{r}
+library(ggplot2)
+ggplot(TitanicSurvival, aes(x = sex, fill = survived)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Répartition des survivants en fonction du sexe",
+    x = "Sex",
+    y = "Nombre de Passagers",
+    fill = "Survie"
+  ) +
+  scale_fill_manual(values = c("no" = "orange", "yes" = "skyblue")) +  
+  theme_light()
+```
+Créer un graphique de la répartition des survivants en fonction de la class
+```{r}
+library(ggplot2)
+ggplot(TitanicSurvival, aes(x = passengerClass, fill = survived)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Répartition des survivants en fonction de la classe",
+    x = "La class",
+    y = "Nombre de Passagers",
+    fill = "Survie"
+  ) +
+  scale_fill_manual(values = c("no" = "purple", "yes" = "yellow")) + 
+  theme_light()
+```
+
+
+Créer un graphique de l'âge en fonction de la survie
+```{r}
+ggplot(TitanicSurvival, aes(x = survived, y = age, fill = survived)) +
+  geom_violin(trim = FALSE, alpha = 0.5) +  # Violin plot avec un peu de transparence
+  geom_boxplot(width = 0.2, color = "black", alpha = 0.6) +  # Boxplot à l'intérieur du violin
+  labs(
+    title = "Répartition de l'âge en fonction de la survie",
+    x = "Survécu",
+    y = "Âge"
+  ) +
+  scale_fill_manual(values = c("no" = "red", "yes" = "pink")) +  # couleurs personnalisées
+  theme_light()
+
+```
+
